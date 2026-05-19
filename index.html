@@ -1,39 +1,299 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AminoSync: Personalized EAA Dosage & Timing Calculator</title>
+    <title>AminoSync: Premium EAA Dosage & Timing Optimizer</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: #0f172a; color: #f8fafc; padding: 40px 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; background: #1e293b; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 1px solid #334155; overflow: hidden; }
-        .header { background: linear-gradient(135deg, #0ea5e9, #2563eb); padding: 30px; text-align: center; }
-        .header h1 { font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
-        .header p { color: #e2e8f0; font-size: 14px; }
-        .wrapper { padding: 30px; }
-        .section-title { font-size: 15px; color: #38bdf8; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #334155; padding-bottom: 6px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #cbd5e1; }
-        input[type="number"], select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; border-radius: 8px; color: #ffffff; font-size: 15px; }
-        .radio-group { margin-top: 8px; }
-        .radio-label { inline-block; margin-right: 20px; font-size: 14px; color: #cbd5e1; cursor: pointer; }
-        .radio-label input { margin-right: 6px; }
-        .btn-calc { display: block; width: 100%; padding: 14px; background: #0ea5e9; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
-        .btn-calc:hover { background: #0284c7; }
-        .results-box { display: none; margin-top: 30px; background: #0f172a; border-radius: 12px; padding: 24px; border: 1px solid #334155; }
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: rgba(22, 30, 49, 0.7);
+            --border-color: rgba(56, 189, 248, 0.15);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #0ea5e9;
+            --accent-glow: #38bdf8;
+            --accent-green: #10b981;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Cabinet Grotesk', 'Segoe UI', system-ui, sans-serif; 
+        }
+
+        body { 
+            background: radial-gradient(circle at top right, #1e1b4b 0%, var(--bg-main) 60%);
+            color: var(--text-primary); 
+            padding: 60px 20px; 
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { 
+            max-width: 750px; 
+            margin: 0 auto; 
+            background: var(--bg-card); 
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            border: 1px solid var(--border-color); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            overflow: hidden; 
+        }
+
+        .header { 
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 40px 30px 20px 30px; 
+            text-align: center; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .header h1 { 
+            font-size: 32px; 
+            font-weight: 800; 
+            color: #ffffff; 
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p { 
+            color: var(--text-secondary); 
+            font-size: 14px; 
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .wrapper { padding: 40px; }
+
+        .section-title { 
+            font-size: 13px; 
+            color: var(--accent-glow); 
+            margin-bottom: 24px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(56, 189, 248, 0.3), rgba(0,0,0,0));
+        }
+
+        .form-group { margin-bottom: 28px; }
+
+        label { 
+            display: block; 
+            margin-bottom: 10px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #cbd5e1; 
+        }
+
+        input[type="number"], select { 
+            width: 100%; 
+            padding: 14px 16px; 
+            background: rgba(15, 23, 42, 0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 12px; 
+            color: #ffffff; 
+            font-size: 15px; 
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus, select:focus { 
+            outline: none; 
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .radio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .radio-btn {
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-btn input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-btn .btn-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .radio-btn:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .radio-btn input:checked ~ .btn-text {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .radio-btn.checked-active {
+            border-color: var(--accent-cyan);
+            background: rgba(14, 165, 233, 0.08);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
+        }
+
+        .btn-calc { 
+            display: block; 
+            width: 100%; 
+            padding: 16px; 
+            background: linear-gradient(135deg, var(--accent-cyan), #2563eb); 
+            color: #ffffff; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-calc:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(14, 165, 233, 0.5);
+        }
+
+        .results-box { 
+            display: none; 
+            margin-top: 40px; 
+            background: rgba(10, 15, 25, 0.8); 
+            border-radius: 16px; 
+            padding: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .results-box.active { display: block; }
-        .main-dose { text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #334155; }
-        .main-dose .val { font-size: 46px; font-weight: 800; color: #22c55e; }
-        .main-dose .lbl { font-size: 13px; color: #94a3b8; text-transform: uppercase; }
-        .timing-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .timing-table th, .timing-table td { padding: 12px; text-align: left; font-size: 14px; }
-        .timing-table th { background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155; }
-        .timing-table td { border-bottom: 1px solid #1e293b; }
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .badge-opt { background: #0369a1; color: #e0f2fe; }
-        .badge-rec { background: #15803d; color: #dcfce7; }
-        .footer-note { margin-top: 20px; font-size: 12px; color: #64748b; text-align: center; }
+
+        .main-dose { 
+            text-align: center; 
+            margin-bottom: 30px; 
+            padding-bottom: 24px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+
+        .main-dose .val { 
+            font-size: 54px; 
+            font-weight: 800; 
+            color: var(--accent-green); 
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+            line-height: 1.1;
+        }
+
+        .main-dose .lbl { 
+            font-size: 12px; 
+            color: var(--text-secondary); 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px;
+            margin-top: 8px;
+        }
+
+        .timing-label-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+        }
+
+        .timing-table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0 10px;
+            margin-top: 5px; 
+        }
+
+        .timing-table th, .timing-table td { 
+            padding: 16px; 
+            text-align: left; 
+            font-size: 14px; 
+        }
+
+        .timing-table th { 
+            color: var(--text-secondary); 
+            font-weight: 600; 
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding-bottom: 5px;
+        }
+
+        .timing-table tbody tr {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .timing-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: scale(1.01);
+        }
+
+        .timing-table td:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .timing-table td:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .badge { 
+            display: inline-block; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 11px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+
+        .badge-opt { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.2); }
+        .badge-rec { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+
+        .footer-note { 
+            margin-top: 24px; 
+            font-size: 12px; 
+            color: #475569; 
+            text-align: center; 
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -41,15 +301,15 @@
 <div class="container">
     <div class="header">
         <h1>AminoSync</h1>
-        <p>Personalized EAA Dosage & Timing Calculator</p>
+        <p>Personalized EAA Dosage & Timing Optimizer</p>
     </div>
     
     <div class="wrapper">
-        <div class="section-title">1. Profil Pengguna & Metrik</div>
+        <div class="section-title">1. User Metrics & Profile</div>
         
         <div class="form-group">
-            <label>Berat Badan</label>
-            <div style="display: flex; gap: 10px;">
+            <label>Body Weight</label>
+            <div style="display: flex; gap: 12px;">
                 <input type="number" id="weight" value="70" min="30" max="200" style="flex: 2;">
                 <select id="weightUnit" style="flex: 1;">
                     <option value="kg">kg</option>
@@ -59,69 +319,88 @@
         </div>
         
         <div class="form-group">
-            <label>Tujuan Kebugaran (Fitness Goal)</label>
+            <label>Fitness Goal</label>
             <select id="goal">
-                <option value="hypertrophy">Muscle Hypertrophy (Bina Otot)</option>
-                <option value="fatloss">Fat Loss / Caloric Deficit (Proteksi Otot)</option>
-                <option value="endurance">Endurance & Recovery (Ketahanan)</option>
+                <option value="hypertrophy">Muscle Hypertrophy (Mass Gain)</option>
+                <option value="fatloss">Fat Loss / Caloric Deficit (Muscle Retention)</option>
+                <option value="endurance">Endurance & Rapid Recovery</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Intensitas Latihan</label>
+            <label>Training Intensity</label>
             <select id="intensity">
-                <option value="light">Ringan (Kardio santai, Yoga)</option>
-                <option value="moderate" selected>Sedang (Weight Training 45-60 Menit)</option>
-                <option value="intense">Intens / Volume Tinggi (Latihan > 90 Menit, CrossFit)</option>
+                <option value="light">Light (Recovery sessions, steady cardio)</option>
+                <option value="moderate" selected>Moderate (Weight training 45-60 minutes)</option>
+                <option value="intense">Intense / High Volume (Athletic training > 90 mins)</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Status Lambung Sebelum Latihan</label>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="stomach" value="fasted"> Kondisi Puasa (Fasted State)</label>
-                <label class="radio-label"><input type="radio" name="stomach" value="fed" checked> Sudah Makan (Fed State)</label>
+            <label>Pre-Workout Metabolic State</label>
+            <div class="radio-grid">
+                <div class="radio-btn" id="lblFasted" onclick="setStomach('fasted')">
+                    <input type="radio" name="stomach" id="stateFasted" value="fasted">
+                    <span class="btn-text">Fasted State</span>
+                </div>
+                <div class="radio-btn checked-active" id="lblFed" onclick="setStomach('fed')">
+                    <input type="radio" name="stomach" id="stateFed" value="fed" checked>
+                    <span class="btn-text">Fed State</span>
+                </div>
             </div>
         </div>
 
         <button class="btn-calc" onclick="calculateEAA()">Sync My Aminos</button>
 
         <div class="results-box" id="results">
-            <div class="section-title">2. Hasil Optimasi Sinkronisasi</div>
+            <div class="section-title">2. Synchronization Analysis</div>
             
             <div class="main-dose">
                 <div class="val" id="totalDose">0g</div>
-                <div class="lbl">Total Kebutuhan EAA Per Sesi Latihan</div>
+                <div class="lbl">Total EAA Requirement Per Session</div>
             </div>
 
-            <label>Protokol Waktu & Pembagian Dosis Optimal:</label>
+            <div class="timing-label-header">Optimal Protocol Breakdown:</div>
             <table class="timing-table">
                 <thead>
                     <tr>
-                        <th>Waktu (Timing)</th>
-                        <th>Dosis</th>
-                        <th>Rekomendasi / Prioritas</th>
+                        <th>Window</th>
+                        <th>Target Dose</th>
+                        <th>Priority Status</th>
                     </tr>
                 </thead>
                 <tbody id="timingBody"></tbody>
             </table>
             
             <div class="footer-note">
-                *Algoritma dikalkulasi berdasarkan pemenuhan ambang batas Leucine untuk memicu aktivasi mTOR.
+                *Precision algorithms are configured based on target leucine thresholds required to successfully saturate muscle tissue and trigger mTOR pathways.
             </div>
         </div>
     </div>
 </div>
 
 <script>
+function setStomach(value) {
+    document.getElementById('stateFasted').checked = (value === 'fasted');
+    document.getElementById('stateFed').checked = (value === 'fed');
+    
+    if(value === 'fasted') {
+        document.getElementById('lblFasted').classList.add('checked-active');
+        document.getElementById('lblFed').classList.remove('checked-active');
+    } else {
+        document.getElementById('lblFed').classList.add('checked-active');
+        document.getElementById('lblFasted').classList.remove('checked-active');
+    }
+}
+
 function calculateEAA() {
     let weight = parseFloat(document.getElementById('weight').value);
     let unit = document.getElementById('weightUnit').value;
     let goal = document.getElementById('goal').value;
     let intensity = document.getElementById('intensity').value;
-    let stomach = document.querySelector('input[name="stomach"]:checked').value;
+    let stomach = document.getElementById('stateFasted').checked ? 'fasted' : 'fed';
 
-    if (isNaN(weight) || weight <= 0) { alert("Masukkan berat badan."); return; }
+    if (isNaN(weight) || weight <= 0) { alert("Please enter a valid weight metric."); return; }
 
     let weightKg = unit === 'lbs' ? weight * 0.453592 : weight;
     let multiplier = 0.15; 
@@ -136,15 +415,18 @@ function calculateEAA() {
 
     let html = "";
     if (stomach === 'fasted') {
-        html += `<tr><td><strong>Pre-Workout</strong><br><small>15m sebelum latihan</small></td><td>${(totalEAA * 0.6).toFixed(1)} g</td><td><span class="badge badge-rec">Kritis (Mencegah Katabolik)</span></td></tr>`;
-        html += `<tr><td><strong>Intra-Workout</strong><br><small>Sip pelan saat latihan</small></td><td>${(totalEAA * 0.4).toFixed(1)} g</td><td><span class="badge badge-opt">Pendukung Energi</span></td></tr>`;
+        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>${(totalEAA * 0.6).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Critical (Anti-Catabolic)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.4).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Sustained Output</span></td></tr>`;
     } else {
-        html += `<tr><td><strong>Pre-Workout</strong><br><small>15m sebelum latihan</small></td><td>0 g</td><td><span class="badge badge-opt">Tidak wajib (Sudah ada asam amino darah)</span></td></tr>`;
-        html += `<tr><td><strong>Intra-Workout</strong><br><small>Sip pelan saat latihan</small></td><td>${(totalEAA * 0.5).toFixed(1)} g</td><td><span class="badge badge-rec">Sangat Direkomendasikan</span></td></tr>`;
-        html += `<tr><td><strong>Post-Workout</strong><br><small>Jika jeda makan besar lambat</small></td><td>${(totalEAA * 0.5).toFixed(1)} g</td><td><span class="badge badge-opt">Opsional</span></td></tr>`;
+        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>0 g</strong></td><td><span class="badge badge-opt">Optional (Fed State)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Highly Recommended</span></td></tr>`;
+        html += `<tr><td><strong>Post-Workout</strong><br><small style="color:var(--text-secondary)">If whole meal is delayed</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Anabolic Window</span></td></tr>`;
     }
     document.getElementById('timingBody').innerHTML = html;
     document.getElementById('results').classList.add('active');
+    
+    // Smooth scroll to results
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 </body>
