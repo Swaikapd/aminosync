@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AminoSync: Personalized EAA Dosage & Timing Calculator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; padding: 40px 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: #1e293b; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 1px solid #334155; overflow: hidden; }
+        .header { background: linear-gradient(135deg, #0ea5e9, #2563eb); padding: 30px; text-align: center; }
+        .header h1 { font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+        .header p { color: #e2e8f0; font-size: 14px; }
+        .wrapper { padding: 30px; }
+        .section-title { font-size: 15px; color: #38bdf8; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #334155; padding-bottom: 6px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #cbd5e1; }
+        input[type="number"], select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; border-radius: 8px; color: #ffffff; font-size: 15px; }
+        .radio-group { margin-top: 8px; }
+        .radio-label { inline-block; margin-right: 20px; font-size: 14px; color: #cbd5e1; cursor: pointer; }
+        .radio-label input { margin-right: 6px; }
+        .btn-calc { display: block; width: 100%; padding: 14px; background: #0ea5e9; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .btn-calc:hover { background: #0284c7; }
+        .results-box { display: none; margin-top: 30px; background: #0f172a; border-radius: 12px; padding: 24px; border: 1px solid #334155; }
+        .results-box.active { display: block; }
+        .main-dose { text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #334155; }
+        .main-dose .val { font-size: 46px; font-weight: 800; color: #22c55e; }
+        .main-dose .lbl { font-size: 13px; color: #94a3b8; text-transform: uppercase; }
+        .timing-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .timing-table th, .timing-table td { padding: 12px; text-align: left; font-size: 14px; }
+        .timing-table th { background: #1e293b; color: #38bdf8; border-bottom: 2px solid #334155; }
+        .timing-table td { border-bottom: 1px solid #1e293b; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .badge-opt { background: #0369a1; color: #e0f2fe; }
+        .badge-rec { background: #15803d; color: #dcfce7; }
+        .footer-note { margin-top: 20px; font-size: 12px; color: #64748b; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>AminoSync</h1>
+        <p>Personalized EAA Dosage & Timing Calculator</p>
+    </div>
+    
+    <div class="wrapper">
+        <div class="section-title">1. Profil Pengguna & Metrik</div>
+        
+        <div class="form-group">
+            <label>Berat Badan</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="number" id="weight" value="70" min="30" max="200" style="flex: 2;">
+                <select id="weightUnit" style="flex: 1;">
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Tujuan Kebugaran (Fitness Goal)</label>
+            <select id="goal">
+                <option value="hypertrophy">Muscle Hypertrophy (Bina Otot)</option>
+                <option value="fatloss">Fat Loss / Caloric Deficit (Proteksi Otot)</option>
+                <option value="endurance">Endurance & Recovery (Ketahanan)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Intensitas Latihan</label>
+            <select id="intensity">
+                <option value="light">Ringan (Kardio santai, Yoga)</option>
+                <option value="moderate" selected>Sedang (Weight Training 45-60 Menit)</option>
+                <option value="intense">Intens / Volume Tinggi (Latihan > 90 Menit, CrossFit)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Status Lambung Sebelum Latihan</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="stomach" value="fasted"> Kondisi Puasa (Fasted State)</label>
+                <label class="radio-label"><input type="radio" name="stomach" value="fed" checked> Sudah Makan (Fed State)</label>
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calculateEAA()">Sync My Aminos</button>
+
+        <div class="results-box" id="results">
+            <div class="section-title">2. Hasil Optimasi Sinkronisasi</div>
+            
+            <div class="main-dose">
+                <div class="val" id="totalDose">0g</div>
+                <div class="lbl">Total Kebutuhan EAA Per Sesi Latihan</div>
+            </div>
+
+            <label>Protokol Waktu & Pembagian Dosis Optimal:</label>
+            <table class="timing-table">
+                <thead>
+                    <tr>
+                        <th>Waktu (Timing)</th>
+                        <th>Dosis</th>
+                        <th>Rekomendasi / Prioritas</th>
+                    </tr>
+                </thead>
+                <tbody id="timingBody"></tbody>
+            </table>
+            
+            <div class="footer-note">
+                *Algoritma dikalkulasi berdasarkan pemenuhan ambang batas Leucine untuk memicu aktivasi mTOR.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateEAA() {
+    let weight = parseFloat(document.getElementById('weight').value);
+    let unit = document.getElementById('weightUnit').value;
+    let goal = document.getElementById('goal').value;
+    let intensity = document.getElementById('intensity').value;
+    let stomach = document.querySelector('input[name="stomach"]:checked').value;
+
+    if (isNaN(weight) || weight <= 0) { alert("Masukkan berat badan."); return; }
+
+    let weightKg = unit === 'lbs' ? weight * 0.453592 : weight;
+    let multiplier = 0.15; 
+    
+    if (goal === 'hypertrophy') multiplier += 0.03;
+    if (goal === 'fatloss') multiplier += 0.05; 
+    if (intensity === 'light') multiplier -= 0.03;
+    if (intensity === 'intense') multiplier += 0.04;
+
+    let totalEAA = Math.min(Math.max(weightKg * multiplier, 6), 25);
+    document.getElementById('totalDose').innerText = totalEAA.toFixed(1) + " g";
+
+    let html = "";
+    if (stomach === 'fasted') {
+        html += `<tr><td><strong>Pre-Workout</strong><br><small>15m sebelum latihan</small></td><td>${(totalEAA * 0.6).toFixed(1)} g</td><td><span class="badge badge-rec">Kritis (Mencegah Katabolik)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small>Sip pelan saat latihan</small></td><td>${(totalEAA * 0.4).toFixed(1)} g</td><td><span class="badge badge-opt">Pendukung Energi</span></td></tr>`;
+    } else {
+        html += `<tr><td><strong>Pre-Workout</strong><br><small>15m sebelum latihan</small></td><td>0 g</td><td><span class="badge badge-opt">Tidak wajib (Sudah ada asam amino darah)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small>Sip pelan saat latihan</small></td><td>${(totalEAA * 0.5).toFixed(1)} g</td><td><span class="badge badge-rec">Sangat Direkomendasikan</span></td></tr>`;
+        html += `<tr><td><strong>Post-Workout</strong><br><small>Jika jeda makan besar lambat</small></td><td>${(totalEAA * 0.5).toFixed(1)} g</td><td><span class="badge badge-opt">Opsional</span></td></tr>`;
+    }
+    document.getElementById('timingBody').innerHTML = html;
+    document.getElementById('results').classList.add('active');
+}
+</script>
+</body>
+</html>
