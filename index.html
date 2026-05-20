@@ -6,59 +6,76 @@
     <title>AminoSync: Premium EAA Dosage & Timing Optimizer</title>
     <style>
         :root {
-            --bg-main: #0b0f19;
-            --bg-card: rgba(22, 30, 49, 0.7);
-            --border-color: rgba(56, 189, 248, 0.15);
-            --text-primary: #f1f5f9;
+            --bg-main: #060913;
+            --bg-card: rgba(17, 24, 43, 0.75);
+            --border-color: rgba(56, 189, 248, 0.2);
+            --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --accent-cyan: #0ea5e9;
             --accent-glow: #38bdf8;
             --accent-green: #10b981;
-            --cta-gradient: linear-gradient(135deg, #1d4ed8, #f59e0b);
+            --cta-gradient: linear-gradient(135deg, #059669 0%, #10b981 50%, #d97706 100%);
         }
 
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            font-family: 'Cabinet Grotesk', 'Segoe UI', system-ui, sans-serif; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
         }
 
         body { 
-            background: radial-gradient(circle at top right, #1e1b4b 0%, var(--bg-main) 60%);
+            background: radial-gradient(circle at top right, #131130 0%, var(--bg-main) 70%);
             color: var(--text-primary); 
-            padding: 60px 20px; 
-            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
-        .container { 
-            max-width: 375px; 
-            margin: 0 auto; 
+        /* Strict 9:16 Mobile App Aspect Ratio Constraints */
+        .phone-wrapper {
+            width: 100%;
+            max-width: 410px;
+            height: calc(410px * (16 / 9));
+            max-height: 850px;
             background: var(--bg-card); 
-            border-radius: 24px; 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+            border-radius: 32px; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(14, 165, 233, 0.05); 
             border: 1px solid var(--border-color); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            overflow: hidden; 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            display: none; /* Safari/Chrome */
         }
 
         .header { 
-            background: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-            padding: 30px 30px 15px 30px; 
-            text-align: left; 
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.12) 0%, rgba(0, 0, 0, 0) 100%);
+            padding: 30px 24px 15px 24px; 
             display: flex;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .header img {
-            width: 50px;
-            height: 50px;
-            margin-right: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        /* High Definition Logo Styling */
+        .header .logo {
+            width: 52px;
+            height: 52px;
+            margin-right: 14px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.3));
         }
 
         .header-text {
@@ -78,18 +95,19 @@
 
         .header p { 
             color: var(--text-secondary); 
-            font-size: 11px; 
-            margin-top: -2px;
+            font-size: 10px; 
+            margin-top: -1px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
-        .wrapper { padding: 30px; }
+        .wrapper { padding: 24px; }
 
         .section-title { 
-            font-size: 12px; 
+            font-size: 11px; 
             color: var(--accent-glow); 
-            margin-bottom: 20px; 
+            margin-bottom: 18px; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             font-weight: 700;
@@ -102,14 +120,14 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, rgba(56, 189, 248, 0.3), rgba(0,0,0,0));
+            background: linear-gradient(to right, rgba(56, 189, 248, 0.25), rgba(0,0,0,0));
         }
 
-        .form-group { margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
 
         label { 
             display: block; 
-            margin-bottom: 8px; 
+            margin-bottom: 6px; 
             font-size: 13px; 
             font-weight: 600; 
             color: #cbd5e1; 
@@ -118,7 +136,7 @@
         input[type="number"], select { 
             width: 100%; 
             padding: 12px 14px; 
-            background: rgba(15, 23, 42, 0.6); 
+            background: rgba(10, 15, 30, 0.7); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             border-radius: 12px; 
             color: #ffffff; 
@@ -129,23 +147,23 @@
         input[type="number"]:focus, select:focus { 
             outline: none; 
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);
-            background: rgba(15, 23, 42, 0.9);
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.25);
+            background: rgba(10, 15, 30, 0.9);
         }
 
         .radio-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 6px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 4px;
         }
 
         .radio-btn {
             position: relative;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(10, 15, 30, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 14px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -164,78 +182,81 @@
         }
 
         .radio-btn:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-        }
-
-        .radio-btn input:checked ~ .btn-text {
-            color: #ffffff;
-            font-weight: 600;
+            border-color: rgba(56, 189, 248, 0.3);
         }
 
         .radio-btn.checked-active {
             border-color: var(--accent-cyan);
-            background: rgba(14, 165, 233, 0.08);
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.15);
+            background: rgba(14, 165, 233, 0.1);
+            box-shadow: 0 0 12px rgba(14, 165, 233, 0.15);
+        }
+
+        .radio-btn.checked-active .btn-text {
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .btn-calc { 
             display: block; 
             width: 100%; 
             padding: 14px; 
-            background: linear-gradient(135deg, var(--accent-cyan), #2563eb); 
+            background: linear-gradient(135deg, var(--accent-cyan), #1d4ed8); 
             color: #ffffff; 
             border: none; 
             border-radius: 12px; 
-            font-size: 15px; 
+            font-size: 14px; 
             font-weight: 700; 
             cursor: pointer; 
             transition: all 0.3s ease; 
-            margin-top: 10px;
+            margin-top: 6px;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.35);
         }
 
         .btn-calc:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
         }
 
+        /* High-Converting Premium Affiliate CTA Button */
         .cta-button {
             display: block;
             width: 100%;
-            padding: 16px;
+            padding: 15px 12px;
             background: var(--cta-gradient);
             color: #ffffff;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 700;
             text-align: center;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 15px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+            margin-top: 14px;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+            filter: brightness(1.1);
         }
 
         .results-box { 
             display: none; 
-            margin-top: 30px; 
-            background: rgba(10, 15, 25, 0.8); 
+            margin-top: 26px; 
+            background: rgba(5, 8, 18, 0.85); 
             border-radius: 16px; 
-            padding: 25px; 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            animation: fadeIn 0.5s ease forwards;
+            padding: 20px; 
+            border: 1px solid rgba(255, 255, 255, 0.04); 
+            animation: fadeIn 0.4s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -243,182 +264,177 @@
 
         .main-dose { 
             text-align: center; 
-            margin-bottom: 24px; 
-            padding-bottom: 20px; 
+            margin-bottom: 20px; 
+            padding-bottom: 16px; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
         }
 
         .main-dose .val { 
-            font-size: 48px; 
+            font-size: 44px; 
             font-weight: 800; 
             color: var(--accent-green); 
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+            text-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
             line-height: 1.1;
         }
 
         .main-dose .lbl { 
-            font-size: 11px; 
+            font-size: 10px; 
             color: var(--text-secondary); 
             text-transform: uppercase; 
             letter-spacing: 1.5px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .timing-label-header {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #cbd5e1;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .timing-table { 
             width: 100%; 
             border-collapse: separate; 
-            border-spacing: 0 8px;
-            margin-top: 5px; 
+            border-spacing: 0 6px;
         }
 
         .timing-table th, .timing-table td { 
-            padding: 14px; 
+            padding: 12px; 
             text-align: left; 
-            font-size: 13px; 
+            font-size: 12px; 
         }
 
         .timing-table th { 
             color: var(--text-secondary); 
             font-weight: 600; 
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1px;
-            padding-bottom: 4px;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            padding-bottom: 2px;
         }
 
         .timing-table tbody tr {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .timing-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.04);
-            transform: scale(1.01);
-        }
-
-        .timing-table td:first-child {
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-
-        .timing-table td:last-child {
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
+        .timing-table td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        .timing-table td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
 
         .badge { 
             display: inline-block; 
-            padding: 3px 8px; 
-            border-radius: 6px; 
-            font-size: 10px; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-size: 9px; 
             font-weight: 700; 
             text-transform: uppercase; 
-            letter-spacing: 0.5px;
         }
 
-        .badge-opt { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.2); }
-        .badge-rec { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-opt { background: rgba(14, 165, 233, 0.12); color: #38bdf8; }
+        .badge-rec { background: rgba(16, 185, 129, 0.12); color: #34d399; }
 
         .footer-note { 
-            margin-top: 20px; 
-            font-size: 11px; 
+            margin-top: 16px; 
+            font-size: 10px; 
             color: #475569; 
             text-align: center; 
-            line-height: 1.5;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <img src="[INSERT_LOGO_IMAGE_URL_HERE]" alt="Boost Daily Logo">
-        <div class="header-text">
-            <h1>AminoSync</h1>
-            <p>Premium EAA Dosage & Timing Optimizer</p>
+<div class="phone-wrapper">
+    <div class="scrollable-content">
+        <div class="header">
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" fill="#1e40af" stroke="#38bdf8" stroke-width="4"/>
+                <circle cx="50" cy="50" r="40" fill="#0f172a"/>
+                <path d="M25 45h12v6H25zm16-12h12v6H41zm16 24h12v6H57z" fill="#38bdf8" opacity="0.3"/>
+                <text x="50" y="44" font-family="system-ui" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">BOOST</text>
+                <text x="50" y="60" font-family="system-ui" font-weight="900" font-size="15" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">DAILY</text>
+                <path d="M35 70 l12-12 h8 l15-15" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <path d="M70 43 v6 h-6" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div class="header-text">
+                <h1>AminoSync</h1>
+                <p>Premium EAA Dosage Optimizer</p>
+            </div>
         </div>
-    </div>
-    
-    <div class="wrapper">
-        <div class="section-title">1. User Metrics & Profile</div>
         
-        <div class="form-group">
-            <label>Body Weight</label>
-            <div style="display: flex; gap: 10px;">
-                <input type="number" id="weight" value="70" min="30" max="200" style="flex: 2;">
-                <select id="weightUnit" style="flex: 1;">
-                    <option value="kg">kg</option>
-                    <option value="lbs">lbs</option>
+        <div class="wrapper">
+            <div class="section-title">1. User Metrics & Profile</div>
+            
+            <div class="form-group">
+                <label>Body Weight</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="weight" value="70" min="30" max="200" style="flex: 2;">
+                    <select id="weightUnit" style="flex: 1;">
+                        <option value="kg">kg</option>
+                        <option value="lbs">lbs</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Fitness Goal</label>
+                <select id="goal">
+                    <option value="hypertrophy">Muscle Hypertrophy (Mass Gain)</option>
+                    <option value="fatloss">Fat Loss (Muscle Retention)</option>
+                    <option value="endurance">Endurance & Rapid Recovery</option>
                 </select>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Fitness Goal</label>
-            <select id="goal">
-                <option value="hypertrophy">Muscle Hypertrophy (Mass Gain)</option>
-                <option value="fatloss">Fat Loss / Caloric Deficit (Muscle Retention)</option>
-                <option value="endurance">Endurance & Rapid Recovery</option>
-            </select>
-        </div>
 
-        <div class="form-group">
-            <label>Training Intensity</label>
-            <select id="intensity">
-                <option value="light">Light (Recovery sessions, steady cardio)</option>
-                <option value="moderate" selected>Moderate (Weight training 45-60 minutes)</option>
-                <option value="intense">Intense / High Volume (Athletic training > 90 mins)</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Pre-Workout Metabolic State</label>
-            <div class="radio-grid">
-                <div class="radio-btn" id="lblFasted" onclick="setStomach('fasted')">
-                    <input type="radio" name="stomach" id="stateFasted" value="fasted">
-                    <span class="btn-text">Fasted State</span>
-                </div>
-                <div class="radio-btn checked-active" id="lblFed" onclick="setStomach('fed')">
-                    <input type="radio" name="stomach" id="stateFed" value="fed" checked>
-                    <span class="btn-text">Fed State</span>
-                </div>
-            </div>
-        </div>
-
-        <button class="btn-calc" onclick="calculateEAA()">Sync My Aminos</button>
-
-        <a href="https://www.advancedbionutritional.com/DS24/Advanced-Amino/Muscle-Mass-Loss/HD.htm#aff=LuckySmartAndEasy" class="cta-button">Get Our Recommended Premium Amino Formula Here</a>
-
-        <div class="results-box" id="results">
-            <div class="section-title">2. Optimal Synchronization Results</div>
-            
-            <div class="main-dose">
-                <div class="val" id="totalDose">0g</div>
-                <div class="lbl">Total EAA Requirement Per Session</div>
+            <div class="form-group">
+                <label>Training Intensity</label>
+                <select id="intensity">
+                    <option value="light">Light (Steady cardio, recovery)</option>
+                    <option value="moderate" selected>Moderate (Weight training 45-60m)</option>
+                    <option value="intense">Intense (High volume / athletic >90m)</option>
+                </select>
             </div>
 
-            <div class="timing-label-header">Optimal Protocol Breakdown:</div>
-            <table class="timing-table">
-                <thead>
-                    <tr>
-                        <th>Window</th>
-                        <th>Target Dose</th>
-                        <th>Priority Status</th>
-                    </tr>
-                </thead>
-                <tbody id="timingBody"></tbody>
-            </table>
-            
-            <div class="footer-note">
-                *Precision algorithms are configured based on target leucine thresholds required to successfully saturate muscle tissue and trigger mTOR pathways.
+            <div class="form-group">
+                <label>Pre-Workout Metabolic State</label>
+                <div class="radio-grid">
+                    <div class="radio-btn" id="lblFasted" onclick="setStomach('fasted')">
+                        <input type="radio" name="stomach" id="stateFasted" value="fasted">
+                        <span class="btn-text">Fasted State</span>
+                    </div>
+                    <div class="radio-btn checked-active" id="lblFed" onclick="setStomach('fed')">
+                        <input type="radio" name="stomach" id="stateFed" value="fed" checked>
+                        <span class="btn-text">Fed State</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-calc" onclick="calculateEAA()">Sync My Aminos</button>
+
+            <a href="https://www.advancedbionutritionals.com/DS24/Advanced-Amino/Muscle-Mass-Loss/HD.htm#aff=LuckySmartAndEasy" target="_blank" class="cta-button">Get Our Recommended Premium Amino Formula Here</a>
+
+            <div class="results-box" id="results">
+                <div class="section-title">2. Synchronization Analysis</div>
+                
+                <div class="main-dose">
+                    <div class="val" id="totalDose">0g</div>
+                    <div class="lbl">Total EAA Requirement Per Session</div>
+                </div>
+
+                <div class="timing-label-header">Optimal Protocol Breakdown:</div>
+                <table class="timing-table">
+                    <thead>
+                        <tr>
+                            <th>Window</th>
+                            <th>Target Dose</th>
+                            <th>Priority Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timingBody"></tbody>
+                </table>
+                
+                <div class="footer-note">
+                    *Precision algorithms match required thresholds to trigger mTOR muscle synthesis pathways.
+                </div>
             </div>
         </div>
     </div>
@@ -460,18 +476,20 @@ function calculateEAA() {
 
     let html = "";
     if (stomach === 'fasted') {
-        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>${(totalEAA * 0.6).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Critical (Muscle Protection)</span></td></tr>`;
-        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.4).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Sustained Energy</span></td></tr>`;
+        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before</small></td><td><strong>${(totalEAA * 0.6).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Critical (Anti-Catabolic)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.4).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Sustained Output</span></td></tr>`;
     } else {
-        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>0 g</strong></td><td><span class="badge badge-opt">Optional (Fed State)</span></td></tr>`;
-        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Highly Recommended</span></td></tr>`;
-        html += `<tr><td><strong>Post-Workout</strong><br><small style="color:var(--text-secondary)">If whole meal is delayed</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Anabolic Window Window</span></td></tr>`;
+        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before</small></td><td><strong>0 g</strong></td><td><span class="badge badge-opt">Optional (Fed)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Highly Rec.</span></td></tr>`;
+        html += `<tr><td><strong>Post-Workout</strong><br><small style="color:var(--text-secondary)">Within 45m post-gym</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Anabolic Window</span></td></tr>`;
     }
     document.getElementById('timingBody').innerHTML = html;
     document.getElementById('results').classList.add('active');
     
-    // Smooth scroll to results
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setTimeout(() => {
+        let obj = document.getElementById('results');
+        obj.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }
 </script>
 </body>
