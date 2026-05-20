@@ -14,6 +14,7 @@
             --accent-cyan: #0ea5e9;
             --accent-glow: #38bdf8;
             --accent-green: #10b981;
+            --cta-gradient: linear-gradient(135deg, #1d4ed8, #f59e0b);
         }
 
         * { 
@@ -32,7 +33,7 @@
         }
 
         .container { 
-            max-width: 750px; 
+            max-width: 375px; 
             margin: 0 auto; 
             background: var(--bg-card); 
             border-radius: 24px; 
@@ -45,13 +46,28 @@
 
         .header { 
             background: linear-gradient(180deg, rgba(14, 165, 233, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-            padding: 40px 30px 20px 30px; 
-            text-align: center; 
+            padding: 30px 30px 15px 30px; 
+            text-align: left; 
+            display: flex;
+            align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
+        .header img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
         .header h1 { 
-            font-size: 32px; 
+            font-size: 26px; 
             font-weight: 800; 
             color: #ffffff; 
             letter-spacing: -0.5px;
@@ -62,18 +78,18 @@
 
         .header p { 
             color: var(--text-secondary); 
-            font-size: 14px; 
-            margin-top: 6px;
+            font-size: 11px; 
+            margin-top: -2px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
         }
 
-        .wrapper { padding: 40px; }
+        .wrapper { padding: 30px; }
 
         .section-title { 
-            font-size: 13px; 
+            font-size: 12px; 
             color: var(--accent-glow); 
-            margin-bottom: 24px; 
+            margin-bottom: 20px; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             font-weight: 700;
@@ -89,24 +105,24 @@
             background: linear-gradient(to right, rgba(56, 189, 248, 0.3), rgba(0,0,0,0));
         }
 
-        .form-group { margin-bottom: 28px; }
+        .form-group { margin-bottom: 24px; }
 
         label { 
             display: block; 
-            margin-bottom: 10px; 
-            font-size: 14px; 
+            margin-bottom: 8px; 
+            font-size: 13px; 
             font-weight: 600; 
             color: #cbd5e1; 
         }
 
         input[type="number"], select { 
             width: 100%; 
-            padding: 14px 16px; 
+            padding: 12px 14px; 
             background: rgba(15, 23, 42, 0.6); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             border-radius: 12px; 
             color: #ffffff; 
-            font-size: 15px; 
+            font-size: 14px; 
             transition: all 0.3s ease;
         }
 
@@ -119,9 +135,9 @@
 
         .radio-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 8px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 6px;
         }
 
         .radio-btn {
@@ -129,7 +145,7 @@
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -142,7 +158,7 @@
         }
 
         .radio-btn .btn-text {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-secondary);
         }
@@ -165,31 +181,55 @@
         .btn-calc { 
             display: block; 
             width: 100%; 
-            padding: 16px; 
+            padding: 14px; 
             background: linear-gradient(135deg, var(--accent-cyan), #2563eb); 
             color: #ffffff; 
             border: none; 
             border-radius: 12px; 
-            font-size: 16px; 
+            font-size: 15px; 
             font-weight: 700; 
             cursor: pointer; 
             transition: all 0.3s ease; 
             margin-top: 10px;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
         .btn-calc:hover { 
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(14, 165, 233, 0.5);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--cta-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
         }
 
         .results-box { 
             display: none; 
-            margin-top: 40px; 
+            margin-top: 30px; 
             background: rgba(10, 15, 25, 0.8); 
             border-radius: 16px; 
-            padding: 30px; 
+            padding: 25px; 
             border: 1px solid rgba(255, 255, 255, 0.05); 
             animation: fadeIn 0.5s ease forwards;
         }
@@ -203,13 +243,13 @@
 
         .main-dose { 
             text-align: center; 
-            margin-bottom: 30px; 
-            padding-bottom: 24px; 
+            margin-bottom: 24px; 
+            padding-bottom: 20px; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
         }
 
         .main-dose .val { 
-            font-size: 54px; 
+            font-size: 48px; 
             font-weight: 800; 
             color: var(--accent-green); 
             text-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
@@ -217,40 +257,40 @@
         }
 
         .main-dose .lbl { 
-            font-size: 12px; 
+            font-size: 11px; 
             color: var(--text-secondary); 
             text-transform: uppercase; 
             letter-spacing: 1.5px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .timing-label-header {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #cbd5e1;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .timing-table { 
             width: 100%; 
             border-collapse: separate; 
-            border-spacing: 0 10px;
+            border-spacing: 0 8px;
             margin-top: 5px; 
         }
 
         .timing-table th, .timing-table td { 
-            padding: 16px; 
+            padding: 14px; 
             text-align: left; 
-            font-size: 14px; 
+            font-size: 13px; 
         }
 
         .timing-table th { 
             color: var(--text-secondary); 
             font-weight: 600; 
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1px;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
         }
 
         .timing-table tbody tr {
@@ -276,9 +316,9 @@
 
         .badge { 
             display: inline-block; 
-            padding: 4px 10px; 
+            padding: 3px 8px; 
             border-radius: 6px; 
-            font-size: 11px; 
+            font-size: 10px; 
             font-weight: 700; 
             text-transform: uppercase; 
             letter-spacing: 0.5px;
@@ -288,8 +328,8 @@
         .badge-rec { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
 
         .footer-note { 
-            margin-top: 24px; 
-            font-size: 12px; 
+            margin-top: 20px; 
+            font-size: 11px; 
             color: #475569; 
             text-align: center; 
             line-height: 1.5;
@@ -300,8 +340,11 @@
 
 <div class="container">
     <div class="header">
-        <h1>AminoSync</h1>
-        <p>Personalized EAA Dosage & Timing Optimizer</p>
+        <img src="[INSERT_LOGO_IMAGE_URL_HERE]" alt="Boost Daily Logo">
+        <div class="header-text">
+            <h1>AminoSync</h1>
+            <p>Premium EAA Dosage & Timing Optimizer</p>
+        </div>
     </div>
     
     <div class="wrapper">
@@ -309,7 +352,7 @@
         
         <div class="form-group">
             <label>Body Weight</label>
-            <div style="display: flex; gap: 12px;">
+            <div style="display: flex; gap: 10px;">
                 <input type="number" id="weight" value="70" min="30" max="200" style="flex: 2;">
                 <select id="weightUnit" style="flex: 1;">
                     <option value="kg">kg</option>
@@ -352,8 +395,10 @@
 
         <button class="btn-calc" onclick="calculateEAA()">Sync My Aminos</button>
 
+        <a href="https://www.advancedbionutritional.com/DS24/Advanced-Amino/Muscle-Mass-Loss/HD.htm#aff=LuckySmartAndEasy" class="cta-button">Get Our Recommended Premium Amino Formula Here</a>
+
         <div class="results-box" id="results">
-            <div class="section-title">2. Synchronization Analysis</div>
+            <div class="section-title">2. Optimal Synchronization Results</div>
             
             <div class="main-dose">
                 <div class="val" id="totalDose">0g</div>
@@ -415,12 +460,12 @@ function calculateEAA() {
 
     let html = "";
     if (stomach === 'fasted') {
-        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>${(totalEAA * 0.6).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Critical (Anti-Catabolic)</span></td></tr>`;
-        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.4).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Sustained Output</span></td></tr>`;
+        html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>${(totalEAA * 0.6).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Critical (Muscle Protection)</span></td></tr>`;
+        html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.4).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Sustained Energy</span></td></tr>`;
     } else {
         html += `<tr><td><strong>Pre-Workout</strong><br><small style="color:var(--text-secondary)">15m before training</small></td><td><strong>0 g</strong></td><td><span class="badge badge-opt">Optional (Fed State)</span></td></tr>`;
         html += `<tr><td><strong>Intra-Workout</strong><br><small style="color:var(--text-secondary)">Sip during training</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-rec">Highly Recommended</span></td></tr>`;
-        html += `<tr><td><strong>Post-Workout</strong><br><small style="color:var(--text-secondary)">If whole meal is delayed</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Anabolic Window</span></td></tr>`;
+        html += `<tr><td><strong>Post-Workout</strong><br><small style="color:var(--text-secondary)">If whole meal is delayed</small></td><td><strong>${(totalEAA * 0.5).toFixed(1)} g</strong></td><td><span class="badge badge-opt">Anabolic Window Window</span></td></tr>`;
     }
     document.getElementById('timingBody').innerHTML = html;
     document.getElementById('results').classList.add('active');
